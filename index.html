@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ektha Weds Prajwal | Royal Wedding Invitation</title>
+  
+  <!-- Meta for Social Sharing -->
+  <meta property="og:title" content="Ektha Weds Prajwal | Royal Wedding Invitation" />
+  <meta property="og:description" content="We cordially invite you to celebrate the auspicious wedding ceremonies of Ektha & Prajwal across Rampur, Mangalore, and Udupi." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#480c19" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Floating Falling Petals Canvas Engine -->
+  <canvas id="petals-canvas"></canvas>
+
+  <!-- Audio Element (Traditional Shehnai & Sitar Celebration) -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="https://actions.google.com/sounds/v1/ambiences/temple_bell.ogg" type="audio/ogg" />
+  </audio>
+
+  <!-- ==========================================================================
+       ROYAL ENVELOPE / WAX SEAL OPENING MODAL (HERO EXPERIENCE)
+       ========================================================================== -->
+  <div id="envelope-overlay">
+    <div class="envelope-wrapper">
+      <div class="royal-envelope-card">
+        <!-- Golden Corner Filigree Motifs -->
+        <svg class="envelope-corner-motif top-left" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 5H30C25 15 15 25 5 30V5Z" fill="#d4af37" opacity="0.6"/>
+          <circle cx="10" cy="10" r="3" fill="#fae188"/>
+        </svg>
+        <svg class="envelope-corner-motif top-right" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 5H30C25 15 15 25 5 30V5Z" fill="#d4af37" opacity="0.6"/>
+          <circle cx="10" cy="10" r="3" fill="#fae188"/>
+        </svg>
+        <svg class="envelope-corner-motif bottom-left" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 5H30C25 15 15 25 5 30V5Z" fill="#d4af37" opacity="0.6"/>
+          <circle cx="10" cy="10" r="3" fill="#fae188"/>
+        </svg>
+        <svg class="envelope-corner-motif bottom-right" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 5H30C25 15 15 25 5 30V5Z" fill="#d4af37" opacity="0.6"/>
+          <circle cx="10" cy="10" r="3" fill="#fae188"/>
+        </svg>
+
+        <div class="shubh-vivah-badge">
+          <span>✨</span> शुभ विवाह <span>✨</span>
+        </div>
+
+        <!-- Lord Ganesha Golden Motif SVG -->
+        <div class="envelope-ganesha-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 6C20 6 14 16 14 26C14 36 22 40 22 46C22 52 26 56 32 58C38 56 42 52 42 46C42 40 50 36 50 26C50 16 44 6 32 6Z" stroke="#d4af37" stroke-width="2" fill="rgba(212, 175, 55, 0.1)"/>
+            <path d="M26 22C26 22 30 18 32 18C34 18 38 22 38 22" stroke="#fae188" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="32" cy="28" r="3" fill="#ff4d4d"/>
+            <path d="M32 32V44C32 46 34 48 37 47C39 46 39 44 38 42" stroke="#fae188" stroke-width="2" stroke-linecap="round"/>
+            <path d="M20 28C16 30 16 36 20 38" stroke="#d4af37" stroke-width="1.5"/>
+            <path d="M44 28C48 30 48 36 44 38" stroke="#d4af37" stroke-width="1.5"/>
+          </svg>
+        </div>
+
+        <h3 class="envelope-title font-royal-title">ROYAL WEDDING INVITATION</h3>
+        
+        <div class="envelope-couple-names font-script">
+          Ektha <span style="font-size: 2rem; color: #d4af37; font-family: serif;">&</span> Prajwal
+        </div>
+
+        <!-- Interactive Wax Seal Button -->
+        <div class="wax-seal-btn" id="wax-seal-btn" title="Click to Open Royal Invitation">
+          <div class="wax-seal-initials">E & P</div>
+          <div class="wax-seal-subtext">OPEN</div>
+        </div>
+
+        <p class="envelope-prompt">
+          <span>👑</span> Touch wax seal to unfold wedding invitation <span>👑</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FLOATING CONTROLS (Audio, Share, Petals)
+       ========================================================================== -->
+  <div class="floating-controls-container">
+    <!-- Music Player Toggle -->
+    <button class="floating-btn music-paused" id="music-toggle-btn" aria-label="Toggle Traditional Music">
+      <div class="music-waves">
+        <span class="music-bar"></span>
+        <span class="music-bar"></span>
+        <span class="music-bar"></span>
+        <span class="music-bar"></span>
+      </div>
+      <span class="floating-tooltip" id="music-tooltip">Play Royal Music</span>
+    </button>
+
+    <!-- WhatsApp Share Button -->
+    <button class="floating-btn" id="share-btn" aria-label="Share Wedding Invitation">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="18" cy="5" r="3"></circle>
+        <circle cx="6" cy="12" r="3"></circle>
+        <circle cx="18" cy="19" r="3"></circle>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+      </svg>
+      <span class="floating-tooltip">Share Invitation</span>
+    </button>
+
+    <!-- Quick RSVP Shortcut Button -->
+    <a href="#rsvp-section" class="floating-btn" aria-label="Quick RSVP">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+      </svg>
+      <span class="floating-tooltip">RSVP Now</span>
+    </a>
+  </div>
+
+  <!-- ==========================================================================
+       HERO BANNER & AUSPICIOUS INVOCATION
+       ========================================================================== -->
+  <header class="hero-section">
+    <div class="hero-mandap-arch-bg"></div>
+
+    <div class="royal-container">
+      <div class="royal-mandap-frame reveal-fade">
+        
+        <!-- Auspicious Shloka -->
+        <div class="shloka-box">
+          <p class="sanskrit-text">
+            ॥ ॐ श्री गणेशाय नमः ॥<br />
+            वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ। निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥
+          </p>
+          <p class="shloka-translation">
+            "Lord Ganesha, the remover of all obstacles, may Your divine blessings illuminate this sacred union forever."
+          </p>
+        </div>
+
+        <div class="royal-divider">
+          <span class="divider-line"></span>
+          <span class="divider-symbol">⚜️</span>
+          <span class="divider-line"></span>
+        </div>
+
+        <p class="hero-subtitle">Together with the blessings of our parents & ancestors</p>
+        
+        <div class="hero-couple-container">
+          <h1 class="hero-bride-groom-name">Ektha</h1>
+          <div class="hero-weds-badge">✨ WEDS ✨</div>
+          <h1 class="hero-bride-groom-name">Prajwal</h1>
+        </div>
+
+        <p class="hero-tagline">
+          Cordially invite your gracious presence and warmest blessings to celebrate the auspicious union of two souls and two loving families.
+        </p>
+
+        <!-- Wedding Countdown Timer -->
+        <div class="countdown-wrapper">
+          <div class="countdown-heading">Auspicious Muhurtham Countdown</div>
+          <div class="countdown-grid">
+            <div class="countdown-card">
+              <div class="countdown-number" id="count-days">00</div>
+              <div class="countdown-label">Days</div>
+            </div>
+            <div class="countdown-card">
+              <div class="countdown-number" id="count-hours">00</div>
+              <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-card">
+              <div class="countdown-number" id="count-minutes">00</div>
+              <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-card">
+              <div class="countdown-number" id="count-seconds">00</div>
+              <div class="countdown-label">Seconds</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       THE BLESSED COUPLE & FAMILIES SECTION
+       ========================================================================== -->
+  <section class="family-section" id="family-section">
+    <div class="royal-container">
+      <div class="section-header reveal-fade">
+        <span class="section-subtitle">With Divine Blessings</span>
+        <h2 class="section-title">The Bride & Groom</h2>
+        <div class="royal-divider">
+          <span class="divider-line"></span>
+          <span class="divider-symbol">🌺</span>
+          <span class="divider-line"></span>
+        </div>
+      </div>
+
+      <div class="couple-cards-grid">
+        
+        <!-- Bride Card: Ektha -->
+        <div class="royal-profile-card reveal-fade">
+          <div class="profile-avatar-frame">
+            <div class="profile-avatar-inner">
+              <!-- Bride Silhouette Icon -->
+              <svg viewBox="0 0 24 24" width="70" height="70" fill="none" stroke="#d4af37" stroke-width="1.5">
+                <circle cx="12" cy="7" r="4"></circle>
+                <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"></path>
+                <path d="M8 7c0-2 2-4 4-4s4 2 4 4"></path>
+                <circle cx="12" cy="5" r="1" fill="#ff4d4d"></circle>
+              </svg>
+            </div>
+          </div>
+
+          <span class="profile-role-badge">THE BRIDE</span>
+          <h3 class="profile-name">Ektha</h3>
+          <p class="profile-relation">Cherished Daughter of</p>
+
+          <div class="profile-parents">
+            <div class="parents-label">Parents</div>
+            <div class="parents-names">Mrs. Shruthi & Mr. Shanthosh</div>
+          </div>
+
+          <div class="profile-residence">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Manipal</span>
+          </div>
+        </div>
+
+        <!-- Groom Card: Prajwal -->
+        <div class="royal-profile-card reveal-fade">
+          <div class="profile-avatar-frame">
+            <div class="profile-avatar-inner">
+              <!-- Groom Silhouette Icon -->
+              <svg viewBox="0 0 24 24" width="70" height="70" fill="none" stroke="#d4af37" stroke-width="1.5">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+                <path d="M10 2l2 2 2-2" stroke="#fae188" stroke-width="2"></path>
+              </svg>
+            </div>
+          </div>
+
+          <span class="profile-role-badge">THE GROOM</span>
+          <h3 class="profile-name">Prajwal</h3>
+          <p class="profile-relation">Beloved Son of</p>
+
+          <div class="profile-parents">
+            <div class="parents-label">Parents</div>
+            <div class="parents-names">Mrs. Sowmya & Mr. Rahul</div>
+          </div>
+
+          <div class="profile-residence">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Rampur</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       EVENTS & ITINERARY (Mehendi, Wedding, Reception)
+       ========================================================================== -->
+  <section class="events-section" id="events-section">
+    <div class="royal-container">
+      <div class="section-header reveal-fade">
+        <span class="section-subtitle">Auspicious Celebrations</span>
+        <h2 class="section-title">Wedding Itinerary</h2>
+        <div class="royal-divider">
+          <span class="divider-line"></span>
+          <span class="divider-symbol">🪔</span>
+          <span class="divider-line"></span>
+        </div>
+      </div>
+
+      <div class="events-timeline">
+
+        <!-- 1. MEHENDI CEREMONY (Rampur) -->
+        <div class="event-card reveal-fade">
+          <div class="event-banner-side mehendi-theme">
+            <div class="event-icon-circle">
+              <!-- Henna / Music Note Icon -->
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18V5l12-2v13"></path>
+                <circle cx="6" cy="18" r="3"></circle>
+                <circle cx="18" cy="16" r="3"></circle>
+              </svg>
+            </div>
+            <span class="event-ceremony-tag">Ceremony I</span>
+            <h3 style="font-size: 1.5rem; margin-top: 4px; font-family: var(--font-serif-title);">Mehendi</h3>
+            <span class="event-city-badge">📍 Rampur</span>
+          </div>
+
+          <div class="event-content-side">
+            <div>
+              <h3 class="event-title-main">Mehendi & Sangeet Utsav</h3>
+              <p class="event-description">
+                Join us for an evening of joyous songs, folk dance, laughter, and intricate Henna artistry as we begin our wedding festivities!
+              </p>
+
+              <div class="event-details-row">
+                <div class="event-meta-item">
+                  <div class="event-meta-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="event-meta-label">Date & Time</div>
+                    <div class="event-meta-value">Thursday, 26 November | 5:00 PM Onwards</div>
+                  </div>
+                </div>
+
+                <div class="event-meta-item">
+                  <div class="event-meta-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="event-meta-label">Ceremony Venue</div>
+                    <div class="event-meta-value">Rampur Celebration Hall</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="event-actions-bar">
+              <a href="https://maps.app.goo.gl/3ighUCHFA5Gw2ifL6" target="_blank" rel="noopener noreferrer" class="btn-primary-royal">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                </svg>
+                <span>Navigate on Google Maps</span>
+              </a>
+
+              <button onclick="addToGoogleCalendar('mehendi')" class="btn-secondary-royal">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="12" y1="9" x2="12" y2="15"></line>
+                  <line x1="9" y1="12" x2="15" y2="12"></line>
+                </svg>
+                <span>Add to Calendar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. THE WEDDING CEREMONY (Mangalore) -->
+        <div class="event-card reveal-fade">
+          <div class="event-banner-side wedding-theme">
+            <div class="event-icon-circle">
+              <!-- Sacred Fire / Mandap Icon -->
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2c0 4-4 6-4 10 0 4.42 3.58 8 8 8s8-3.58 8-8c0-4-4-6-4-10-2 2-4 4-8 0z"></path>
+              </svg>
+            </div>
+            <span class="event-ceremony-tag">Main Ceremony</span>
+            <h3 style="font-size: 1.5rem; margin-top: 4px; font-family: var(--font-serif-title);">Wedding</h3>
+            <span class="event-city-badge">📍 Mangalore</span>
+          </div>
+
+          <div class="event-content-side">
+            <div>
+              <h3 class="event-title-main">Auspicious Wedding Muhurtham</h3>
+              <p class="event-description">
+                The sacred tying of the Mangalsutra, Varmala exchange, and Seven Sacred Vows (Saptapadi) around the holy fire amidst Vedic chants.
+              </p>
+
+              <div class="event-details-row">
+                <div class="event-meta-item">
+                  <div class="event-meta-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="event-meta-label">Muhurtham Date & Time</div>
+                    <div class="event-meta-value">Saturday, 28 November | 10:30 AM (Sumuhurtham)</div>
+                  </div>
+                </div>
+
+                <div class="event-meta-item">
+                  <div class="event-meta-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="event-meta-label">Wedding Mandap</div>
+                    <div class="event-meta-value">Mangalore Grand Royal Kalyana Mantapa</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="event-actions-bar">
+              <a href="https://maps.app.goo.gl/JrE6Uj9qXWiEqPSy9" target="_blank" rel="noopener noreferrer" class="btn-primary-royal">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                </svg>
+                <span>Navigate on Google Maps</span>
+              </a>
+
+              <button onclick="addToGoogleCalendar('wedding')" class="btn-secondary-royal">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="12" y1="9" x2="12" y2="15"></line>
+                  <line x1="9" y1="12" x2="15" y2="12"></line>
+                </svg>
+                <span>Add to Calendar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. GRAND RECEPTION (Udupi) -->
+        <div class="event-card reveal-fade">
+          <div class="event-banner-side reception-theme">
+            <div class="event-icon-circle">
+              <!-- Champagne / Feast Icon -->
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 22h8m-4-7v7M7 2h10v6a5 5 0 0 1-10 0V2z"></path>
+              </svg>
+            </div>
+            <span class="event-ceremony-tag">Grand Finale</span>
+            <h3 style="font-size: 1.5rem; margin-top: 4px; font-family: var(--font-serif-title);">Reception</h3>
+            <span class="event-city-badge">📍 Udupi</span>
+          </div>
+
+          <div class="event-content-side">
+            <div>
+              <h3 class="event-title-main">Grand Wedding Reception</h3>
+              <p class="event-description">
+                Celebrate the newly wedded couple Ektha & Prajwal with an exquisite royal banquet dinner, live musical entertainment, and photo moments.
+              </p>
+
+              <div class="event-details-row">
+                <div class="event-meta-item">
+                  <div class="event-meta-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="event-meta-label">Date & Time</div>
+                    <div class="event-meta-value">Sunday, 29 November | 6:30 PM Onwards</div>
+                  </div>
+                </div>
+
+                <div class="event-meta-item">
+                  <div class="event-meta-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="event-meta-label">Reception Venue</div>
+                    <div class="event-meta-value">Udupi Heritage Convention Palace</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="event-actions-bar">
+              <a href="https://maps.app.goo.gl/2uLcTuJK8bCG4qsSA" target="_blank" rel="noopener noreferrer" class="btn-primary-royal">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                </svg>
+                <span>Navigate on Google Maps</span>
+              </a>
+
+              <button onclick="addToGoogleCalendar('reception')" class="btn-secondary-royal">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="12" y1="9" x2="12" y2="15"></line>
+                  <line x1="9" y1="12" x2="15" y2="12"></line>
+                </svg>
+                <span>Add to Calendar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       PHOTO GALLERY / MEMORIES SECTION
+       ========================================================================== -->
+  <section class="gallery-section" id="gallery-section">
+    <div class="royal-container">
+      <div class="section-header reveal-fade">
+        <span class="section-subtitle">Moments of Love</span>
+        <h2 class="section-title">Pre-Wedding Glimpses</h2>
+        <div class="royal-divider">
+          <span class="divider-line"></span>
+          <span class="divider-symbol">📸</span>
+          <span class="divider-line"></span>
+        </div>
+      </div>
+
+      <div class="gallery-grid">
+        
+        <div class="gallery-card reveal-fade">
+          <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80" alt="Ektha and Prajwal Moment 1" loading="lazy" />
+          <div class="gallery-card-overlay">
+            <span class="gallery-caption">Traditional Elegance</span>
+          </div>
+        </div>
+
+        <div class="gallery-card reveal-fade">
+          <img src="https://images.unsplash.com/photo-1609151162377-794fa6ec4a39?auto=format&fit=crop&w=800&q=80" alt="Ektha and Prajwal Moment 2" loading="lazy" />
+          <div class="gallery-card-overlay">
+            <span class="gallery-caption">Auspicious Golden Glow</span>
+          </div>
+        </div>
+
+        <div class="gallery-card reveal-fade">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" alt="Ektha and Prajwal Moment 3" loading="lazy" />
+          <div class="gallery-card-overlay">
+            <span class="gallery-caption">Together Forever</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox Fullscreen Modal -->
+  <div class="lightbox-modal" id="lightbox-modal">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close">&times;</button>
+      <img id="lightbox-img" src="" alt="Wedding Memory Full View" />
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       RSVP & DIGITAL BLESSINGS WALL (GUESTBOOK)
+       ========================================================================== -->
+  <section class="rsvp-blessings-section" id="rsvp-section">
+    <div class="royal-container">
+      <div class="section-header reveal-fade">
+        <span class="section-subtitle">Be Our Honoured Guest</span>
+        <h2 class="section-title">RSVP & Heartfelt Blessings</h2>
+        <div class="royal-divider">
+          <span class="divider-line"></span>
+          <span class="divider-symbol">💌</span>
+          <span class="divider-line"></span>
+        </div>
+      </div>
+
+      <div class="rsvp-grid-wrapper">
+        
+        <!-- RSVP Form -->
+        <div class="royal-form-card reveal-fade">
+          <h3 class="font-royal-title" style="color: var(--color-gold-light); font-size: 1.4rem; margin-bottom: 20px; text-align: center;">
+            Kindly Confirm Your Attendance
+          </h3>
+
+          <form id="wedding-rsvp-form">
+            <div class="form-group">
+              <label class="form-label" for="guest-name">Your Full Name *</label>
+              <input type="text" id="guest-name" class="royal-input" placeholder="e.g. Ramesh Hegde & Family" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="guest-phone">WhatsApp / Phone Number</label>
+              <input type="tel" id="guest-phone" class="royal-input" placeholder="+91 98765 43210" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="guest-count">Number of Attending Guests *</label>
+              <select id="guest-count" class="royal-select">
+                <option value="1">1 Person</option>
+                <option value="2" selected>2 Persons (Couple)</option>
+                <option value="3">3 Persons</option>
+                <option value="4">4 Persons (Family)</option>
+                <option value="5+">5+ Persons (Family)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Events You Will Be Attending *</label>
+              <div class="event-checkbox-group">
+                <label class="custom-checkbox-label">
+                  <input type="checkbox" id="event-mehendi" checked />
+                  <span>Mehendi Ceremony @ Rampur</span>
+                </label>
+                <label class="custom-checkbox-label">
+                  <input type="checkbox" id="event-wedding" checked />
+                  <span>Wedding Muhurtham @ Mangalore</span>
+                </label>
+                <label class="custom-checkbox-label">
+                  <input type="checkbox" id="event-reception" checked />
+                  <span>Grand Reception @ Udupi</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="guest-blessing">Your Blessings / Note for the Couple</label>
+              <textarea id="guest-blessing" class="royal-textarea" rows="3" placeholder="Write your heartfelt wishes & blessings here..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit-rsvp">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.079-1.803-.396-1.573-.642-2.58-2.247-2.658-2.352-.079-.104-.633-.843-.633-1.608 0-.764.397-1.144.54-1.301.144-.158.312-.198.416-.198.104 0 .208.001.299.006.096.005.226-.037.352.268.129.312.443 1.077.482 1.155.039.079.065.171.013.273-.051.104-.078.17-.156.26-.078.092-.163.205-.233.276-.078.079-.16.166-.069.322.091.156.406.67 87 1.084.597.533 1.099.699 1.255.777.156.079.247.065.338-.039.092-.104.39-.455.494-.611.104-.156.208-.13.351-.078.144.052.91.429 1.066.507.156.078.26.117.299.182.039.065.039.378-.105.783z"/>
+              </svg>
+              <span>Confirm & Send RSVP via WhatsApp</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Blessings Wall (Guestbook) -->
+        <div class="royal-form-card reveal-fade">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+            <h3 class="font-royal-title" style="color: var(--color-gold-light); font-size: 1.4rem;">
+              Blessings Wall
+            </h3>
+            <span style="font-size: 0.8rem; color: #fae188; font-family: var(--font-sans);">✨ Live Messages</span>
+          </div>
+
+          <div class="wishes-board" id="wishes-list">
+            <!-- Dynamically populated via rsvp.js -->
+          </div>
+
+          <!-- Quick Blessing Form -->
+          <form id="quick-blessing-form" style="margin-top: 20px; border-top: 1px solid rgba(212, 175, 55, 0.3); padding-top: 15px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+              <input type="text" id="blessing-author" class="royal-input" placeholder="Your Name" required />
+              <input type="text" id="blessing-text" class="royal-input" placeholder="Your Blessing Note" required />
+            </div>
+            <button type="submit" class="btn-secondary-royal" style="width: 100%; justify-content: center;">
+              <span>Post Blessing & Shower Flowers 🌸</span>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP Success Modal -->
+  <div class="lightbox-modal" id="rsvp-success-modal">
+    <div class="lightbox-content royal-form-card" style="max-width: 480px; text-align: center;">
+      <div style="font-size: 3rem; margin-bottom: 10px;">🎉</div>
+      <h3 class="font-royal-title" style="color: var(--color-gold-light); font-size: 1.6rem; margin-bottom: 10px;">
+        RSVP Recorded with Gratitude!
+      </h3>
+      <p style="color: #f7edd8; font-size: 0.95rem; margin-bottom: 20px;">
+        Thank you for confirming your presence. Please click below to send your details directly to the host family via WhatsApp.
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <a id="modal-wa-link" href="#" target="_blank" class="btn-submit-rsvp" style="text-decoration: none;">
+          <span>Open in WhatsApp</span>
+        </a>
+        <button class="btn-secondary-royal modal-close-btn" style="justify-content: center;">
+          <span>Close Window</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       TRAVEL & HOSPITALITY GUIDE
+       ========================================================================== -->
+  <section class="travel-section" id="travel-section">
+    <div class="royal-container">
+      <div class="section-header reveal-fade">
+        <span class="section-subtitle">Guest Assistance</span>
+        <h2 class="section-title">Travel & Venue Guidance</h2>
+        <div class="royal-divider">
+          <span class="divider-line"></span>
+          <span class="divider-symbol">🚗</span>
+          <span class="divider-line"></span>
+        </div>
+      </div>
+
+      <div class="travel-cards-grid">
+        
+        <!-- Rampur Guide -->
+        <div class="travel-card reveal-fade">
+          <div class="travel-icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+          </div>
+          <h3 class="travel-city-name">Rampur (Mehendi)</h3>
+          <p class="travel-info-text">
+            Hosted by Prajwal's family (Rahul & Sowmya). Valet parking and guest assistance available at venue.
+          </p>
+          <div class="host-contact-box">
+            <span>📞 Contact Host: Rampur Family</span>
+          </div>
+          <div style="margin-top: 15px;">
+            <a href="https://maps.app.goo.gl/3ighUCHFA5Gw2ifL6" target="_blank" class="btn-secondary-royal" style="font-size: 0.8rem; padding: 6px 14px;">
+              <span>Open Rampur Map</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Mangalore Guide -->
+        <div class="travel-card reveal-fade">
+          <div class="travel-icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <h3 class="travel-city-name">Mangalore (Wedding)</h3>
+          <p class="travel-info-text">
+            The auspicious wedding ceremony. Centrally located with easy access from Mangalore Central & Airport.
+          </p>
+          <div class="host-contact-box">
+            <span>📞 Contact Host: Mangalore Desk</span>
+          </div>
+          <div style="margin-top: 15px;">
+            <a href="https://maps.app.goo.gl/JrE6Uj9qXWiEqPSy9" target="_blank" class="btn-secondary-royal" style="font-size: 0.8rem; padding: 6px 14px;">
+              <span>Open Mangalore Map</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Udupi Guide -->
+        <div class="travel-card reveal-fade">
+          <div class="travel-icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            </svg>
+          </div>
+          <h3 class="travel-city-name">Udupi (Reception)</h3>
+          <p class="travel-info-text">
+            Grand reception celebration with lavish traditional cuisine and musical reception night.
+          </p>
+          <div class="host-contact-box">
+            <span>📞 Contact Host: Manipal / Udupi Family</span>
+          </div>
+          <div style="margin-top: 15px;">
+            <a href="https://maps.app.goo.gl/2uLcTuJK8bCG4qsSA" target="_blank" class="btn-secondary-royal" style="font-size: 0.8rem; padding: 6px 14px;">
+              <span>Open Udupi Map</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ROYAL FOOTER & SIGN-OFF
+       ========================================================================== -->
+  <footer class="royal-footer">
+    <div class="royal-container">
+      <div class="footer-couple-sig font-script">
+        Ektha & Prajwal
+      </div>
+      
+      <p class="footer-quote">
+        "Two souls with but a single thought, two hearts that beat as one."
+      </p>
+
+      <div class="footer-families-note">
+        Warmly awaiting your gracious presence,<br />
+        <strong>Shruthi & Shanthosh (Manipal)</strong> & <strong>Sowmya & Rahul (Rampur)</strong>
+      </div>
+
+      <div class="royal-divider">
+        <span class="divider-line"></span>
+        <span class="divider-symbol">✨</span>
+        <span class="divider-line"></span>
+      </div>
+
+      <p class="footer-credit">
+        Designed with love for the royal wedding of Ektha & Prajwal
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/petals.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/rsvp.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
